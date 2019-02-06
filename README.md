@@ -11,6 +11,7 @@ The application uses an embedded Derby JDB Driver, so it is self-contained, no o
 Copy the WAR file into the webapps folder, start Tomcat, and open a browser to the location `http://localhost:8080/decatlon`.
 At first startup, the DB will be initialized and the tables created.
 *Note:* in current version the Database files (decathlonDB) are created directly under the main execution dir of Java (or Eclipse). This is not optimal, an improvement is the configuration of the data directory. 
+To re-initialize the data, just stop Tomcat, remove the `decathlonDB` directory, and restart.
 
 ## Development notes
 ### Changelog
@@ -20,6 +21,7 @@ At first startup, the DB will be initialized and the tables created.
 - Added derby.jar (embedded version) in WEB-INF/lib of the project.
 - Implemented a connection in context.xml, and a custom ServletContextListener (that is run at Tomcat startup) to initialize the DB at Startup
 - Shared first version of the code to a repository on GitHub
+- Created webapp framework with header and footer 
 	
 		
 ### TODO 
@@ -41,4 +43,6 @@ At first startup, the DB will be initialized and the tables created.
 ### Should probably have done better
 - Use a proper ORM model. Not implemented for simplicity. The abstraction layer is not optimal, but i wanted to use a "homemade" approach to show the thinking pattern, instead to use a "pre-made" library.
 - Use a build tool like Gradle to build the project and include the dependencies
+- Use a client side compilation tool like less on node.js to allow better and easier frontend coding
+- Better file structure for jsp resources, and better header/footer framework with cleaner includes
 

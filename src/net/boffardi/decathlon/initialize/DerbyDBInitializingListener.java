@@ -4,16 +4,19 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import net.boffardi.decathlon.api.Performance;
 import net.boffardi.decathlon.api.db.DBMgr;
 import net.boffardi.decathlon.api.db.PerformanceMgr;
 import net.boffardi.decathlon.api.types.Discipline;
+import net.boffardi.decathlon.api.types.units.Meters;
+import net.boffardi.decathlon.api.types.units.Seconds;
 
 /**
  * Our custom InitailizingListener is declared as a ServletContextListener in 
@@ -61,7 +64,7 @@ public class DerbyDBInitializingListener implements ServletContextListener {
                 initializeSchema(connection);
             }
         } catch (SQLException sqle) {
-            log.log(Level.SEVERE, "Could not connect to Derby Embedded DB!", sqle);
+            log.severe("Could not connect to Derby Embedded DB!" + sqle.getMessage());
             throw sqle;
         } finally {
             if (connection != null) {
@@ -112,28 +115,7 @@ public class DerbyDBInitializingListener implements ServletContextListener {
         // create the schema tables and seed data
     	log.info("Initializing decathlonDB...");
     	
-    	Statement stmt = con.createStatement();
-    	
-    	String createPerformance = "CREATE TABLE performance ( " + 
-    			"ID VARCHAR(36) NOT NULL, " +
-    			"firstname VARCHAR(28), " +
-    			"lastname VARCHAR(28), " +
-    			"discipline VARCHAR(1), " +
-    			"sprint DECIMAL(7,3), " +
-                "long_jump DECIMAL(7,3), " +
-    			"shot_put DECIMAL(7,3), " +
-                "high_jump DECIMAL(7,3), " +
-                "four_hundreds DECIMAL(7,3), " +
-                "hurdles DECIMAL(7,3), " +
-                "discus DECIMAL(7,3), " +
-                "pole_vault DECIMAL(7,3), " +
-                "javelin DECIMAL(7,3), " +
-                "m1500sprint DECIMAL(7,3), " +
-                "score INTEGER, " +
-                "completed BOOLEAN, " +
-                " PRIMARY KEY (ID))";
-
-    	stmt.executeUpdate(createPerformance);
+    	PerformanceMgr.createTables();
     	
     	// Comment here to start the application with an empty table.
     	initializeDemoData(con);
@@ -147,10 +129,70 @@ public class DerbyDBInitializingListener implements ServletContextListener {
      */
     private void initializeDemoData(Connection con) throws SQLException {
    
-    	PerformanceMgr.createPerformance("Alice", "Allison", Discipline.WOMEN);
-    	PerformanceMgr.createPerformance("Bob", "Burgersson", Discipline.MEN);
-    	PerformanceMgr.createPerformance("Carl", "Cristersson", Discipline.MEN);
-    	PerformanceMgr.createPerformance("Daniel", "Danielsson", Discipline.MEN);
+    	try {
+    	Performance alice = PerformanceMgr.createPerformance("Alice", "Allison", Discipline.WOMEN);
+    	// reference values for 700pts
+    	alice.setSprint(new Seconds("11.756"));
+    	alice.setLongJump(new Meters(6.51));
+    	alice.setShotPut(new Meters(13.53));
+    	alice.setHighJump(new Meters(1.88));
+    	alice.setFourHundreds(new Seconds("52.58"));
+    	alice.setHurdles(new Seconds("16.29"));
+    	alice.setDiscus(new Meters(41.72));
+    	alice.setPoleVault(new Meters(4.29));
+    	alice.setJavelin(new Meters(57.45));
+    	alice.setM1500sprint(new Seconds("4:36.96"));
+    	PerformanceMgr.updatePerformance(alice);
+    	
+    	
+    	Performance bob = PerformanceMgr.createPerformance("Bob", "Burgersson", Discipline.MEN);
+    	// reference values for 900pts
+    	bob.setSprint(new Seconds("10.827"));
+    	bob.setLongJump(new Meters(7.36));
+    	bob.setShotPut(new Meters(16.79));
+    	bob.setHighJump(new Meters(2.10));
+    	bob.setFourHundreds(new Seconds("48.19"));
+    	bob.setHurdles(new Seconds("14.59"));
+    	bob.setDiscus(new Meters(51.4));
+    	bob.setPoleVault(new Meters(4.96));
+    	bob.setJavelin(new Meters(70.67));
+    	bob.setM1500sprint(new Seconds("4:07.42"));
+    	PerformanceMgr.updatePerformance(bob);
+
+
+    	Performance carl = PerformanceMgr.createPerformance("Carl", "Cristersson", Discipline.MEN);
+    	// reference values for 1000pts
+    	carl.setSprint(new Seconds("10.395"));
+    	carl.setLongJump(new Meters(7.76));
+    	carl.setShotPut(new Meters(18.4));
+    	carl.setHighJump(new Meters(2.20));
+    	carl.setFourHundreds(new Seconds("46.17"));
+    	carl.setHurdles(new Seconds("13.8"));
+    	carl.setDiscus(new Meters(56.17));
+    	carl.setPoleVault(new Meters(5.28));
+    	carl.setJavelin(new Meters(77.19));
+    	carl.setM1500sprint(new Seconds("3:53.79"));
+    	PerformanceMgr.updatePerformance(carl);
+
+    	
+    	Performance daniel = PerformanceMgr.createPerformance("Daniel", "Danielsson", Discipline.MEN);
+    	// reference values for 800pts
+    	daniel.setSprint(new Seconds("11.278"));
+    	daniel.setLongJump(new Meters(6.94));
+    	daniel.setShotPut(new Meters(15.16));
+    	daniel.setHighJump(new Meters(1.99));
+    	daniel.setFourHundreds(new Seconds("50.32"));
+    	daniel.setHurdles(new Seconds("15.419"));
+    	daniel.setDiscus(new Meters(46.59));
+    	daniel.setPoleVault(new Meters(4.63));
+    	daniel.setJavelin(new Meters(64.09));
+    	daniel.setM1500sprint(new Seconds("4:21.77"));
+    	PerformanceMgr.updatePerformance(daniel);
+
+    	
+    	} catch (ParseException pe) {
+            log.warning("Cannot initialize sample data! Typo in the program ???  " + pe.getMessage());
+    	}
     }
 
     

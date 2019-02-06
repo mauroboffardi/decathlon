@@ -20,12 +20,16 @@ To re-initialize the data, just stop Tomcat, remove the `decathlonDB` directory,
 - The data is not complicated nor big, so any file based approach (XML, JSON?) would be sufficent. For better expandibility i selected a SQL database, Derby was one of the simpler, since it is free and can be embedded in Tomcat, not requiring external intergration
 - Added derby.jar (embedded version) in WEB-INF/lib of the project.
 - Implemented a connection in context.xml, and a custom ServletContextListener (that is run at Tomcat startup) to initialize the DB at Startup
+- Created Interface/Impl/Magr pattern. "completed" and "score" attributes are calculated in the getters, but made persistent to facilitate sorted data retrival.
 - Shared first version of the code to a repository on GitHub
 - Created webapp framework with header and footer
 - Added configuration of database location 
+- Added UPDATE method for Performance record, went to an extensive redesign of "Seconds" type to provide correct parsing, and relates test cases. Initialized demo data
 	
 		
 ### TODO 
+- calculate score
+- to test cases and review Second.toString()
 - Manage performance deletion
 - Check string length in DB layer
 - Create default view
@@ -37,11 +41,11 @@ To re-initialize the data, just stop Tomcat, remove the `decathlonDB` directory,
 - Rationalize events in their own table?
 
 ### Improvements
-- Implement JUnit tests
+- Implement complete set of JUnit tests
 
 
 ### Should probably have done better
-- Use a proper ORM model. Not implemented for simplicity. The abstraction layer is not optimal, but i wanted to use a "homemade" approach to show the thinking pattern, instead to use a "pre-made" library.
+- Use a proper ORM model. Not implemented for simplicity. The abstraction layer is not optimal, but i wanted to use a "homemade" approach to show the thinking pattern, instead to use a "pre-made" library. Still, i do not like the need of the "update" method to save the object.
 - Use a build tool like Gradle to build the project and include the dependencies
 - Use a client side compilation tool like less on node.js to allow better and easier frontend coding
 - Better file structure for jsp resources, and better header/footer framework with cleaner includes

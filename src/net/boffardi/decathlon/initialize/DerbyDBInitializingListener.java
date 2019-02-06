@@ -2,7 +2,6 @@ package net.boffardi.decathlon.initialize;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -56,6 +55,7 @@ public class DerbyDBInitializingListener implements ServletContextListener {
         Connection connection = null;
         try {
             log.info("Starting up Derby DB...");
+            log.info("Database file are looked up or created in " + System.getProperty("derby.system.home") + " (ENV VAR derby.system.home)");
             connection = DBMgr.getConnection();
             if (!schemaHasBeenInitialized(connection)) {
                 initializeSchema(connection);

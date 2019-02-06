@@ -10,7 +10,7 @@ The repository contains an Eclipse project. Checkout the code, and use Eclipse >
 The application uses an embedded Derby JDB Driver, so it is self-contained, no other resources are needed.
 Copy the WAR file into the webapps folder, start Tomcat, and open a browser to the location `http://localhost:8080/decatlon`.
 At first startup, the DB will be initialized and the tables created.
-*Note:* in current version the Database files (decathlonDB) are created directly under the main execution dir of Java (or Eclipse). This is not optimal, an improvement is the configuration of the data directory. 
+*Note:* by Derby default the Database files (decathlonDB) are created directly under the main execution directory of Java (or Eclipse). To locate files in a directory of choice, add an absolute path as command line parameter of Tomcat: `-Dderby.system.home=`*<Absolutepath>*.
 To re-initialize the data, just stop Tomcat, remove the `decathlonDB` directory, and restart.
 
 ## Development notes
@@ -21,7 +21,8 @@ To re-initialize the data, just stop Tomcat, remove the `decathlonDB` directory,
 - Added derby.jar (embedded version) in WEB-INF/lib of the project.
 - Implemented a connection in context.xml, and a custom ServletContextListener (that is run at Tomcat startup) to initialize the DB at Startup
 - Shared first version of the code to a repository on GitHub
-- Created webapp framework with header and footer 
+- Created webapp framework with header and footer
+- Added configuration of database location 
 	
 		
 ### TODO 
@@ -36,7 +37,6 @@ To re-initialize the data, just stop Tomcat, remove the `decathlonDB` directory,
 - Rationalize events in their own table?
 
 ### Improvements
-- Database file is created in the same dir where the app runs, for me /Applications/Eclipse.app/Contents/MacOS. Specify a better path?
 - Implement JUnit tests
 
 

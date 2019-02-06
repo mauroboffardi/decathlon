@@ -57,7 +57,5 @@ body {
 
 /* Aligns the text in the footer vertically centered */
 #footerText {
-  display: inline-block;
-  vertical-align: middle;
-  line-height: 50px; /* Height of the footer - padding*/
+  font-size: 12px;
 }

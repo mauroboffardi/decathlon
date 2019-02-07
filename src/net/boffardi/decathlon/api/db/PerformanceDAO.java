@@ -320,6 +320,7 @@ public class PerformanceDAO {
     	perf.setShotPut(new Meters(r.getDouble("shot_put")));
     	perf.setHighJump(new Centimeters(r.getDouble("high_jump")));
     	perf.setFourHundreds(new Seconds(r.getDouble("four_hundreds")));
+    	perf.setHurdles(new Seconds(r.getDouble("hurdles")));
     	perf.setDiscus(new Meters(r.getDouble("discus")));
     	perf.setPoleVault(new Centimeters(r.getDouble("pole_vault")));
     	perf.setJavelin(new Meters(r.getDouble("javelin")));

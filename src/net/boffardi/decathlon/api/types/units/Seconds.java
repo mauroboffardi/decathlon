@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,8 +42,11 @@ public class Seconds implements EventResult {
 		this.seconds = seconds;
 	}
 	
+	/**
+	 * Used to check if the result of the event has been registered or not
+	 */
 	public boolean isEmpty() {
-		return (seconds == null);
+		return (seconds == null || seconds == 0.0);
 	}
 	
 	public boolean isTimeBased() {
@@ -137,22 +141,24 @@ public class Seconds implements EventResult {
 		this.seconds = milliseconds.doubleValue() / 1000;
 	}
 
-	// return the amount of seconds in hh:mm:ss.ddd
+	/**
+	 * formats the internal representation of seconds to hh:mm:ss.SSS
+	 */
 	public String toString() {
+		if (this.isEmpty()) return "";
 		
-		//@todo: https://commons.apache.org/proper/commons-lang/javadocs/api-3.1/org/apache/commons/lang3/time/DurationFormatUtils.html
+		Long l = new Double(this.seconds * 1000).longValue();
 		
-		if (this.seconds == null) return "N/A";
-		// convert the decimal version of seconds into a long millisec 
-		/*
-		long millis = Math.round(this.seconds * 1000);
-		
-		String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
-		            TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
-		            TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
-		return hms;
-		*/
-		return this.seconds.toString();
+        long hr = TimeUnit.MILLISECONDS.toHours(l);
+        long min = TimeUnit.MILLISECONDS.toMinutes(l - TimeUnit.HOURS.toMillis(hr));
+        long sec = TimeUnit.MILLISECONDS.toSeconds(l - TimeUnit.HOURS.toMillis(hr) - TimeUnit.MINUTES.toMillis(min));
+        long ms = TimeUnit.MILLISECONDS.toMillis(l - TimeUnit.HOURS.toMillis(hr) - TimeUnit.MINUTES.toMillis(min) - TimeUnit.SECONDS.toMillis(sec));
+        String formatted = String.format("%02d:%02d:%02d.%03d", hr, min, sec, ms);
+
+        // Strips not-significative 0 and ":"
+        // BUG: it will remove the leading "0" in case time is 0.123 seconds
+        formatted = formatted.replaceFirst("[0:]+", "");
+		return  formatted;
 	}
 	
 	public Double getAsDouble() {

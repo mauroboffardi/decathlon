@@ -30,19 +30,20 @@ public class Centimeters implements EventResult {
 		return false;
 	}
 	
-	/* (non-Javadoc)
-	 * @see net.boffardi.decathlon.api.types.units.EventResultAbstractInterface#isEmpty()
-	 */
+
 	@Override
+	/**
+	 * Used to check if the result of the event has been registered or not
+	 */
 	public boolean isEmpty() {
-		return (centimeters == null);
+		return (centimeters == null || centimeters == 0);
 	}
 
 	
 	// empty string if null, otherwise the normal localized representation for double
 	public String toString() {
-		if (centimeters == null) return "";
-		return Double.toString(this.centimeters);
+		if (this.isEmpty()) return "";
+		return Integer.toString(this.centimeters);
 	}
 	
 	/* (non-Javadoc)

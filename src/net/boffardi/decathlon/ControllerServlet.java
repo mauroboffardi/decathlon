@@ -65,7 +65,7 @@ public class ControllerServlet extends HttpServlet {
             throws SQLException, IOException, ServletException {
         List<Performance> listPerformance = PerformanceDAO.listAllPerformances();
         request.setAttribute("scoreboard", listPerformance);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("list.jsp");
         dispatcher.forward(request, response);
     }
  

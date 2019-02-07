@@ -22,9 +22,13 @@ public class Meters implements EventResult {
 		this.meters = meters;
 	}
 	
+	/**
+	 * Used to check if the result of the event has been registered or not
+	 */
 	public boolean isEmpty() {
-		return (meters == null);
+		return (meters == null || meters == 0.0);
 	}
+
 
 	public boolean isTimeBased() {
 		return false;
@@ -32,7 +36,7 @@ public class Meters implements EventResult {
 	
 	// empty string if null, otherwise the normal localized representation for double
 	public String toString() {
-		if (meters == null) return "";
+		if (this.isEmpty()) return "";
 		return Double.toString(this.meters);
 	}
 	

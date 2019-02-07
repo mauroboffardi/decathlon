@@ -9,7 +9,7 @@ body {
 	color: white;
 	
 	font-family: Verdana, Geneva, sans-serif;
-	font-size: 16px;
+	font-size: 12px;
 	letter-spacing: 2px;
 	word-spacing: 2px;
 	font-weight: normal;
@@ -56,6 +56,53 @@ body {
 
 /* Aligns the text in the footer vertically centered */
 #footerText {
-  font-size: 12px;
+  font-size: 0.8em;
 }
 
+
+.divisionheader {
+	border: 0px;
+	font-size: 18px;
+}
+
+.position1 {
+	color: gold;
+	font-size: 1.2em;
+}
+
+.position2 {
+	color: silver;
+	font-size: 1.2em;
+
+}
+
+.position3 {
+	color: #cd7f32;
+	font-size: 1.2em;
+}
+
+.position {
+	text-align: center;
+}
+.result {
+	text-align: right;
+}
+
+.score {
+	white-space: nowrap;
+	text-align: right;
+}
+
+.inprogress {
+	color: white;
+}
+
+.buttons {
+	white-space: nowrap;
+}
+
+.addnew {
+	font-size: 1.4em;
+	color: white;
+	line-height: 2em;
+}

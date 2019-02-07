@@ -28,6 +28,7 @@ To re-initialize the data, just stop Tomcat, remove the `decathlonDB` directory,
 - implemented score calculation, adding more tests. Some trouble with inconsistency of result between different online calculators (i.e http://www.oocities.org/mdetting/sports/decathlon.html) and wikipedia, probably due to rounding. Also, uncertainty between INT() e ROUND(). ROUND returns points closer to the reference values reported in Wikipedia for 7000,8000,9000,10000 pts. The most affected are events measured in centimeters (integer) and with lower values (High Jump), where probably fraction of a centimeter generate more errors. Unfortunately test cases for exact match to 7,8,9,10.000 points still fail, but i'll move forward.
 - Added servlet and basic CRUD methods, made a first version of scoreboard list.
 - Refined semifinal version of the list page, with styling and Awesome font for icons
+- Implemented the "delete athlete" function.
 	
 		
 ### TODO 

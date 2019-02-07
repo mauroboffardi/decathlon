@@ -244,12 +244,16 @@ public class PerformanceDAO {
 		try {
 			Connection conn = DBMgr.getConnection();    	
 
-			String deleteSQL = "DELETE FROM performance SET " + 
-					" WHERE ID = ?";
+			String deleteSQL = "DELETE FROM performance WHERE ID = ?";
 			
 			PreparedStatement uStmt = conn.prepareStatement(deleteSQL);
 
 			uStmt.setString(1, id);
+			
+			uStmt.executeUpdate();
+			uStmt.close();
+			conn.close();
+
 		} catch (SQLException sqle) {
 			// probably a better handling is needed, but the most probable reason is that the record has already deleted (no foreign keys)
 			log.severe("Could not delete a Performance record in the DB! Id=" + id + ", Message: " +  sqle.getMessage());

@@ -89,6 +89,6 @@
             </c:forEach>
         </table>
         
-        <a class="addnew" href="new"><i class="inprogress fas fa-user-plus"></i> Add new participant</a>
+        <a class="navigation" href="new"><i class="inprogress fas fa-user-plus"></i> Add new participant</a>
     </div> 
 <jsp:include page="inc/footer.jsp"/>

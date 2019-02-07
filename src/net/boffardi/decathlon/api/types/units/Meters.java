@@ -1,5 +1,7 @@
 package net.boffardi.decathlon.api.types.units;
 
+import org.apache.derby.iapi.util.StringUtil;
+
 /**
  * Wrapper class for results of events managed in Meters.
  * Used to provide common operation like toString and conversions.
@@ -14,8 +16,15 @@ public class Meters implements EventResult {
 	public Meters() {		
 	}
 
+	/**
+	 * Constructor from string. if string is null or empty the object is created with "empty" status.
+	 * @param metersString
+	 * @throws NumberFormatException
+	 */
 	public Meters(String metersString) throws NumberFormatException {
-		meters = Double.parseDouble(metersString);
+		if (metersString != null && !metersString.isEmpty() ) {
+			meters = Double.parseDouble(metersString);
+		}
 	}
 
 	public Meters(Double meters) {

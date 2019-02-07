@@ -2,7 +2,9 @@ package net.boffardi.decathlon;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import net.boffardi.decathlon.api.Performance;
 import net.boffardi.decathlon.api.Utils;
 import net.boffardi.decathlon.api.db.PerformanceDAO;
+import net.boffardi.decathlon.api.db.PerformanceImpl;
+import net.boffardi.decathlon.api.types.units.Centimeters;
+import net.boffardi.decathlon.api.types.units.Meters;
+import net.boffardi.decathlon.api.types.units.Seconds;
+import net.boffardi.decathlon.initialize.DerbyDBInitializingListener;
  
 /**
  * ControllerServlet.java
@@ -22,6 +29,8 @@ import net.boffardi.decathlon.api.db.PerformanceDAO;
  */
 public class ControllerServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final Logger log = Logger
+            .getLogger(ControllerServlet.class.getName());
  
     public void init() {
     }
@@ -71,7 +80,7 @@ public class ControllerServlet extends HttpServlet {
  
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("form.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("performance_form.jsp");
         dispatcher.forward(request, response);
     }
  
@@ -79,8 +88,8 @@ public class ControllerServlet extends HttpServlet {
             throws SQLException, ServletException, IOException {
         String id = request.getParameter("id");
         Performance existingPerformance = PerformanceDAO.getPerformance(id);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("form.jsp");
-        request.setAttribute("Performance", existingPerformance);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("performance_form.jsp");
+        request.setAttribute("perf", existingPerformance);
         dispatcher.forward(request, response);
  
     }
@@ -88,28 +97,59 @@ public class ControllerServlet extends HttpServlet {
     private void insertPerformance(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
     	
-        String firstName = request.getParameter("firstname");
-        String lastName = request.getParameter("lastname");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
         String discipline = request.getParameter("discipline");
         
-        /* TODO MAP ALL FIELDS HERE FOR INSERT */
- 
-        PerformanceDAO.createPerformance(firstName, lastName, Utils.getDiscipline(discipline));
+        try {
+
+        Performance performance = PerformanceDAO.createPerformance(firstName, lastName, Utils.getDiscipline(discipline));
+    	performance.setSprint(new Seconds(request.getParameter("sprint")));
+    	performance.setLongJump(new Centimeters(request.getParameter("longJump")));
+    	performance.setShotPut(new Meters(request.getParameter("shotPut")));
+    	performance.setHighJump(new Centimeters(request.getParameter("highJump")));
+    	performance.setFourHundreds(new Seconds(request.getParameter("fourHundreds")));
+    	performance.setHurdles(new Seconds(request.getParameter("hurdles")));
+    	performance.setDiscus(new Meters(request.getParameter("discus")));
+    	performance.setPoleVault(new Centimeters(request.getParameter("poleVault")));
+    	performance.setJavelin(new Meters(request.getParameter("javelin")));
+    	performance.setM1500sprint(new Seconds(request.getParameter("m1500sprint")));
+
+        
+    	PerformanceDAO.updatePerformance(performance);
+        } catch (ParseException pe ) {
+            response.sendRedirect("new");        	
+        }
         response.sendRedirect("list");
     }
  
     private void updatePerformance(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         
-    	String firstName = request.getParameter("firstname");
-        String lastName = request.getParameter("lastname");
+    	String id = request.getParameter("id");
+    	String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
         String discipline = request.getParameter("discipline");
  
-        /* TODO MAP ALL FIELDS HERE FOR UPDATE */
+        try {
+        Performance performance = new PerformanceImpl(id, firstName, lastName, discipline);
         
-
-       // Performance Performance = new Performance();
-       //  PerformanceDAO.updatePerformance(Performance);
+    	performance.setSprint(new Seconds(request.getParameter("sprint")));
+    	performance.setLongJump(new Centimeters(request.getParameter("longJump")));
+    	performance.setShotPut(new Meters(request.getParameter("shotPut")));
+    	performance.setHighJump(new Centimeters(request.getParameter("highJump")));
+    	performance.setFourHundreds(new Seconds(request.getParameter("fourHundreds")));
+    	performance.setHurdles(new Seconds(request.getParameter("hurdles")));
+    	performance.setDiscus(new Meters(request.getParameter("discus")));
+    	performance.setPoleVault(new Centimeters(request.getParameter("poleVault")));
+    	performance.setJavelin(new Meters(request.getParameter("javelin")));
+    	performance.setM1500sprint(new Seconds(request.getParameter("m1500sprint")));
+                
+        PerformanceDAO.updatePerformance(performance);
+        } catch (ParseException pe ) {
+            log.warning("Validation error in updatePerformence servlet method ");
+            pe.printStackTrace();
+        }
         response.sendRedirect("list");
     }
  

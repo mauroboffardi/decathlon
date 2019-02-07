@@ -319,6 +319,7 @@ public class PerformanceDAO {
     	
     	Performance perf =  (Performance) new PerformanceImpl(r.getString("id"), 
     				r.getString("firstname"),r.getString("lastname"),r.getString("discipline"));
+    	
     	perf.setSprint(new Seconds(r.getDouble("sprint")));
     	perf.setLongJump(new Centimeters(r.getDouble("long_jump")));
     	perf.setShotPut(new Meters(r.getDouble("shot_put")));

@@ -32,9 +32,6 @@ public class Seconds implements EventResult {
 	// i.e 1214.45
 	private Double seconds = null;
 	
-
-	
-	
 	public Seconds() {
 	}
 
@@ -60,8 +57,10 @@ public class Seconds implements EventResult {
 	 * @throws ParseException 
 	 */
 	public Seconds(String timeString) throws ParseException {
-
-		
+		// if string is not provided, create the object with the default "empty" value
+		if (timeString == null || timeString.isEmpty()) {
+			return;
+		}
 		log.info("Second(String): Trying to parse input time as string [" + timeString + "]");
 		
 		// ALWAYS a mess with dates/times. I could force the app to use "hh:mm:ss.SSS" format always, but

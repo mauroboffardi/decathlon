@@ -41,6 +41,10 @@ body {
 	background-color: white;
 }
 
+#header h1 {
+	text-align: center;
+}
+
 #headerImg {
 	width: 100%; 
 }
@@ -101,7 +105,7 @@ body {
 	white-space: nowrap;
 }
 
-.addnew {
+.navigation {
 	font-size: 1.4em;
 	color: white;
 	line-height: 2em;

@@ -30,14 +30,12 @@ To re-initialize the data, just stop Tomcat, remove the `decathlonDB` directory,
 - Refined semifinal version of the list page, with styling and Awesome font for icons
 - Implemented the "delete athlete" function.
 - fixed initial redirect to /list
+- Created edit/update form and adjusted controller methods
 	
 		
 ### TODO 
-- Complete insertPerformance and createPerformance Methods in the servlet
-- Peformance edit form
-- Manage performance deletion
-
-
+- field validation
+- form styling
 
 ### Improvements
 Those improvements are not necessary for the correct behavior of the MVP, but should probably be done for a final release.
@@ -47,7 +45,8 @@ Those improvements are not necessary for the correct behavior of the MVP, but sh
 - [X] Probably define an interface common to Meters Centimeters and Seconds
 - [] make constructor of PerformanceImpl protected, and use Reflections in test to access it
 - [] fine-tune calculation of points for improved precision. 
-- [] Distinguish between Male/female Calendars for events and label for sprint (110m/100m)
+- [] Distinguish between Male/female Calendars for events
+- [X] Distinguish between 110m/100m
 - [] Check string length in DB layer
 - [] Rationalize events in their own table? In general is better practice, in this case seems overengeneering because, well, decathlon will always remain with 10 events :)
 - [] Better handling of log files

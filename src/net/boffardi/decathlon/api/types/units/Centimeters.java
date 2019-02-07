@@ -14,8 +14,15 @@ public class Centimeters implements EventResult {
 	public Centimeters() {		
 	}
 
+	/**
+	 * Constructor from string. if string is null or empty the object is created with "empty" status.
+	 * @param metersString
+	 * @throws NumberFormatException
+	 */
 	public Centimeters(String centimetersString) throws NumberFormatException {
-		centimeters = Integer.parseInt(centimetersString);
+		if (centimetersString != null && !centimetersString.isEmpty() ) {
+			centimeters = Integer.parseInt(centimetersString);
+		}
 	}
 
 	public Centimeters(Integer centimeters) {

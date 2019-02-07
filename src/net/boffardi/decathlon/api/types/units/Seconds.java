@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,7 +21,7 @@ import java.util.regex.Pattern;
  * @author mauro.boffardi
  *
  */
-public class Seconds {
+public class Seconds implements EventResult {
 	
 	// logger
     private static final Logger log = Logger
@@ -40,6 +39,14 @@ public class Seconds {
 
 	public Seconds(Double seconds) {	
 		this.seconds = seconds;
+	}
+	
+	public boolean isEmpty() {
+		return (seconds == null);
+	}
+	
+	public boolean isTimeBased() {
+		return true;
 	}
 
 	/**
@@ -63,11 +70,6 @@ public class Seconds {
 		Matcher matcher = pattern.matcher(timeString);
 		if (!matcher.matches()) throw new ParseException("String does not matches ##:##:#0.### pattern", -1);
 		
-		System.out.println("g1 hh: " + matcher.group(1));
-		System.out.println("g2 MM: " + matcher.group(2));
-		System.out.println("g3 ss: " + matcher.group(3));
-		System.out.println("g4 SSS: " + matcher.group(4));
-
 		String hh = matcher.group(1);
 		String mm = matcher.group(2);
 		String ss = matcher.group(3);
@@ -142,12 +144,15 @@ public class Seconds {
 		
 		if (this.seconds == null) return "N/A";
 		// convert the decimal version of seconds into a long millisec 
+		/*
 		long millis = Math.round(this.seconds * 1000);
 		
 		String hms = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
 		            TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
 		            TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
 		return hms;
+		*/
+		return this.seconds.toString();
 	}
 	
 	public Double getAsDouble() {

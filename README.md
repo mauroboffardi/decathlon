@@ -25,23 +25,30 @@ To re-initialize the data, just stop Tomcat, remove the `decathlonDB` directory,
 - Created webapp framework with header and footer
 - Added configuration of database location 
 - Added UPDATE method for Performance record, went to an extensive redesign of "Seconds" type to provide correct parsing, and relates test cases. Initialized demo data
+- implemented score calculation, adding more tests. Some trouble with inconsistency of result between different online calculators (i.e http://www.oocities.org/mdetting/sports/decathlon.html) and wikipedia, probably due to rounding. Also, uncertainty between INT() e ROUND(). ROUND returns points closer to the reference values reported in Wikipedia for 7000,8000,9000,10000 pts. The most affected are events measured in centimeters (integer) and with lower values (High Jump), where probably fraction of a centimeter generate more errors. Unfortunately test cases for exact match to 7,8,9,10.000 points still fail, but i'll move forward.
 	
 		
 ### TODO 
-- calculate score
 - to test cases and review Second.toString()
 - Manage performance deletion
-- Check string length in DB layer
 - Create default view
 - Create/edit a new performance
 - Show performance list sorted by score
 - Manage in progress / finished statues
-- Manage logs better
-- Distinguish between Male/female races
-- Rationalize events in their own table?
+
+
 
 ### Improvements
-- Implement complete set of JUnit tests
+Those improvements are not necessary for the correct behavior of the MVP, but should probably be done for a final release.
+
+- [] Implement complete set of JUnit tests
+- [X] Probably define an interface common to Meters Centimeters and Seconds
+- [] make constructor of PerformanceImpl protected, and use Reflections in test to access it
+- [] fine-tune calculation of points for improved precision. 
+- [] Distinguish between Male/female Calendars for events and label for sprint (110m/100m)
+- [] Check string length in DB layer
+- [] Rationalize events in their own table? In general is better practice, in this case seems overengeneering because, well, decathlon will always remain with 10 events :)
+- [] Better handling of log files
 
 
 ### Should probably have done better

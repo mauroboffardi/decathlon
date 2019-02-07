@@ -15,6 +15,7 @@ import net.boffardi.decathlon.api.Performance;
 import net.boffardi.decathlon.api.db.DBMgr;
 import net.boffardi.decathlon.api.db.PerformanceMgr;
 import net.boffardi.decathlon.api.types.Discipline;
+import net.boffardi.decathlon.api.types.units.Centimeters;
 import net.boffardi.decathlon.api.types.units.Meters;
 import net.boffardi.decathlon.api.types.units.Seconds;
 
@@ -133,13 +134,13 @@ public class DerbyDBInitializingListener implements ServletContextListener {
     	Performance alice = PerformanceMgr.createPerformance("Alice", "Allison", Discipline.WOMEN);
     	// reference values for 700pts
     	alice.setSprint(new Seconds("11.756"));
-    	alice.setLongJump(new Meters(6.51));
+    	alice.setLongJump(new Centimeters(651));
     	alice.setShotPut(new Meters(13.53));
-    	alice.setHighJump(new Meters(1.88));
+    	alice.setHighJump(new Centimeters(188)); 
     	alice.setFourHundreds(new Seconds("52.58"));
     	alice.setHurdles(new Seconds("16.29"));
     	alice.setDiscus(new Meters(41.72));
-    	alice.setPoleVault(new Meters(4.29));
+    	alice.setPoleVault(new Centimeters(429));
     	alice.setJavelin(new Meters(57.45));
     	alice.setM1500sprint(new Seconds("4:36.96"));
     	PerformanceMgr.updatePerformance(alice);
@@ -148,13 +149,13 @@ public class DerbyDBInitializingListener implements ServletContextListener {
     	Performance bob = PerformanceMgr.createPerformance("Bob", "Burgersson", Discipline.MEN);
     	// reference values for 900pts
     	bob.setSprint(new Seconds("10.827"));
-    	bob.setLongJump(new Meters(7.36));
+    	bob.setLongJump(new Centimeters(736));
     	bob.setShotPut(new Meters(16.79));
-    	bob.setHighJump(new Meters(2.10));
+    	bob.setHighJump(new Centimeters(210));
     	bob.setFourHundreds(new Seconds("48.19"));
     	bob.setHurdles(new Seconds("14.59"));
     	bob.setDiscus(new Meters(51.4));
-    	bob.setPoleVault(new Meters(4.96));
+    	bob.setPoleVault(new Centimeters(496));
     	bob.setJavelin(new Meters(70.67));
     	bob.setM1500sprint(new Seconds("4:07.42"));
     	PerformanceMgr.updatePerformance(bob);
@@ -163,13 +164,13 @@ public class DerbyDBInitializingListener implements ServletContextListener {
     	Performance carl = PerformanceMgr.createPerformance("Carl", "Cristersson", Discipline.MEN);
     	// reference values for 1000pts
     	carl.setSprint(new Seconds("10.395"));
-    	carl.setLongJump(new Meters(7.76));
+    	carl.setLongJump(new Centimeters(776));
     	carl.setShotPut(new Meters(18.4));
-    	carl.setHighJump(new Meters(2.20));
+    	carl.setHighJump(new Centimeters(220)); 
     	carl.setFourHundreds(new Seconds("46.17"));
     	carl.setHurdles(new Seconds("13.8"));
     	carl.setDiscus(new Meters(56.17));
-    	carl.setPoleVault(new Meters(5.28));
+    	carl.setPoleVault(new Centimeters(528));
     	carl.setJavelin(new Meters(77.19));
     	carl.setM1500sprint(new Seconds("3:53.79"));
     	PerformanceMgr.updatePerformance(carl);
@@ -178,16 +179,33 @@ public class DerbyDBInitializingListener implements ServletContextListener {
     	Performance daniel = PerformanceMgr.createPerformance("Daniel", "Danielsson", Discipline.MEN);
     	// reference values for 800pts
     	daniel.setSprint(new Seconds("11.278"));
-    	daniel.setLongJump(new Meters(6.94));
+    	daniel.setLongJump(new Centimeters(694));
     	daniel.setShotPut(new Meters(15.16));
-    	daniel.setHighJump(new Meters(1.99));
+    	daniel.setHighJump(new Centimeters(199));
     	daniel.setFourHundreds(new Seconds("50.32"));
     	daniel.setHurdles(new Seconds("15.419"));
     	daniel.setDiscus(new Meters(46.59));
-    	daniel.setPoleVault(new Meters(4.63));
+    	daniel.setPoleVault(new Centimeters(463));
     	daniel.setJavelin(new Meters(64.09));
     	daniel.setM1500sprint(new Seconds("4:21.77"));
     	PerformanceMgr.updatePerformance(daniel);
+
+    	// UNCOMPLETED PERFORMANCES
+    	Performance rookie = PerformanceMgr.createPerformance("Rookie", "Rookiesson", Discipline.MEN);
+    	rookie.setSprint(new Seconds("12.121"));
+    	rookie.setLongJump(new Centimeters(678));
+    	rookie.setShotPut(new Meters(14.90));
+    	rookie.setHighJump(new Centimeters(187));
+    	rookie.setFourHundreds(new Seconds("1:00.128"));
+    	PerformanceMgr.updatePerformance(rookie);
+
+    	// UNCOMPLETED PERFORMANCES
+    	Performance lagom = PerformanceMgr.createPerformance("lagom", "lagomsson", Discipline.MEN);
+    	lagom.setSprint(new Seconds("11.281"));
+    	lagom.setLongJump(new Centimeters(698));
+    	lagom.setShotPut(new Meters(18.90));
+    	lagom.setHighJump(new Centimeters(230));
+    	PerformanceMgr.updatePerformance(lagom);
 
     	
     	} catch (ParseException pe) {

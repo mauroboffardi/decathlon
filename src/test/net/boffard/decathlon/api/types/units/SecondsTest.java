@@ -1,11 +1,9 @@
 /**
  * 
  */
-package net.boffardi.decathlon.test.api.types.units;
+package test.net.boffard.decathlon.api.types.units;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import java.text.ParseException;
 

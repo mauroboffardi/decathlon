@@ -7,7 +7,7 @@ package net.boffardi.decathlon.api.types.units;
  * @author mauro.boffardi
  *
  */
-public class Meters {
+public class Meters implements EventResult {
 	private Double meters = null;
 
 	// default constructor 
@@ -20,6 +20,14 @@ public class Meters {
 
 	public Meters(Double meters) {
 		this.meters = meters;
+	}
+	
+	public boolean isEmpty() {
+		return (meters == null);
+	}
+
+	public boolean isTimeBased() {
+		return false;
 	}
 	
 	// empty string if null, otherwise the normal localized representation for double

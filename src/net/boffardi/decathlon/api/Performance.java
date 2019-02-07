@@ -2,6 +2,7 @@ package net.boffardi.decathlon.api;
 
 import net.boffardi.decathlon.api.db.PerformanceImpl;
 import net.boffardi.decathlon.api.types.Discipline;
+import net.boffardi.decathlon.api.types.units.Centimeters;
 import net.boffardi.decathlon.api.types.units.Meters;
 import net.boffardi.decathlon.api.types.units.Seconds;
 /**
@@ -30,17 +31,17 @@ public interface Performance {
 
 	void setSprint(Seconds sprint);
 
-	Meters getLongJump();
+	Centimeters getLongJump();
 
-	void setLongJump(Meters longJump);
+	void setLongJump(Centimeters longJump);
 
 	Meters getShotPut();
 
 	void setShotPut(Meters shotPut);
 
-	Meters getHighJump();
+	Centimeters getHighJump();
 
-	void setHighJump(Meters highJump);
+	void setHighJump(Centimeters highJump);
 
 	Seconds getFourHundreds();
 
@@ -54,9 +55,9 @@ public interface Performance {
 
 	void setDiscus(Meters discus);
 
-	Meters getPoleVault();
+	Centimeters getPoleVault();
 
-	void setPoleVault(Meters discus);
+	void setPoleVault(Centimeters poleVault);
 	
 	Meters getJavelin();
 

@@ -1,10 +1,15 @@
 package net.boffardi.decathlon.api.db;
 
+import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import net.boffardi.decathlon.api.Performance;
 import net.boffardi.decathlon.api.Utils;
 import net.boffardi.decathlon.api.types.Discipline;
+import net.boffardi.decathlon.api.types.ScoreParameters;
+import net.boffardi.decathlon.api.types.units.Centimeters;
+import net.boffardi.decathlon.api.types.units.EventResult;
 import net.boffardi.decathlon.api.types.units.Meters;
 import net.boffardi.decathlon.api.types.units.Seconds;
 
@@ -21,25 +26,31 @@ public class PerformanceImpl implements Performance {
 	private String lastName;
 	private Discipline discipline;
 	private Seconds sprint = new Seconds();  
-	private Meters longJump = new Meters(); 
+	private Centimeters longJump = new Centimeters(); 
 	private Meters shotPut = new Meters(); 
-	private Meters highJump = new Meters(); 
+	private Centimeters highJump = new Centimeters(); 
 	private Seconds fourHundreds = new Seconds();
 	private Seconds hurdles = new Seconds(); 
 	private Meters discus = new Meters();  
-	private Meters poleVault = new Meters();  
+	private Centimeters poleVault = new Centimeters();  
 	private Meters javelin = new Meters(); 
 	private Seconds m1500sprint = new Seconds(); 
-	private Integer score = 0;
+	
+	// definition of the logger
+	private static final Logger log = Logger.getLogger(PerformanceImpl.class.getName());
+
 	
 	/**
 	 * Constructor for a new performance with all defaults.
 	 * ID is auto generated.
+	 * 
+	 * qualifier should be "protect" to make sure 
+	 * 
 	 * @param firstName
 	 * @param lastName
 	 * @param discipline
 	 */
-	protected PerformanceImpl (String firstName, String lastName, Discipline discipline) {
+	public PerformanceImpl (String firstName, String lastName, Discipline discipline) {
 		UUID uuid = UUID.randomUUID();
         this.id = uuid.toString();
         this.firstName = firstName;
@@ -49,25 +60,75 @@ public class PerformanceImpl implements Performance {
 
 	
 	
-	// @TODO Calculate the scores here
-	/* (non-Javadoc)
+	
+	/**
+	 * Calculates the score points according to https://en.wikipedia.org/wiki/Decathlon 
+	 * 
 	 * @see net.boffardi.decathlon.api.db.internal.Performance#getScore()
 	 */
 	@Override
 	public Integer getScore() {
+		Integer score;
+		
+		score = calculatePoints((EventResult)sprint, ScoreParameters.Sprint);
+		score = score + calculatePoints((EventResult)longJump, ScoreParameters.LongJump);
+		score = score + calculatePoints((EventResult)shotPut, ScoreParameters.ShotPut);
+		score = score + calculatePoints((EventResult)highJump, ScoreParameters.HighJump);
+		score = score + calculatePoints((EventResult)fourHundreds, ScoreParameters.FourHundreds);
+		score = score + calculatePoints((EventResult)hurdles, ScoreParameters.Hurdles);
+		score = score + calculatePoints((EventResult)discus, ScoreParameters.Discus);
+		score = score + calculatePoints((EventResult)poleVault, ScoreParameters.PoleVault);
+		score = score + calculatePoints((EventResult)javelin, ScoreParameters.Javelin);
+		score = score + calculatePoints((EventResult)m1500sprint, ScoreParameters.M1500Sprint);
+		
 		return score;
 	}
+	
+	/*
+	 * Probably a bit overkill.
+	 * The method uses the interface to handle all 3 types of results. 
+	 * The first part of the equation is different, but then the rest is the same for all. 
+	 * There is probably more instantiating and GarbageCollecting than strictly necessary,
+	 * but in this context i preferred readabilty.
+	 */
+	
+	private Integer calculatePoints(EventResult er, Map<String,Double> param) {
+		log.info("calculatePoints: er=" + er + " param.get(B)=" + param.get("B"));
+		if (er.isEmpty()) return 0;
+		
+		Double PB;
+		// for Time events, the first part of the equation is "B" - time
+		// for Distance events , the first part of the equation is distance - "B"
+		if (er.isTimeBased()) {
+			PB = param.get("B") - er.getAsDouble();
+		} else {
+			 PB = er.getAsDouble() - param.get("B");
+		}
+		
+		log.info("calculatePoints: PB=" + PB);
+		
+		Double PBC = Math.pow(PB, param.get("C"));
+
+		log.info("calculatePoints: PBC =" + PBC + " -- param.get(C)=" + param.get("C"));
+
+		Double APBC= param.get("A") * PBC;
+		log.info("calculatePoints: points =" + APBC + " -- param.get(A)=" + param.get("A"));
+
+		Long rounded = Math.round(APBC);
+		log.info("calculatePoints: rounding " + APBC + "to " + rounded);
+
+		return (Integer) rounded.intValue();
+	}
+
 
 	@Override
 	/**
 	 * returns "true" if a value has been provided for all 10 events.
 	 */
 	public Boolean isComplete() {
-		Boolean complete = Utils.notNull(sprint,longJump,shotPut,highJump,fourHundreds,hurdles,discus,poleVault,javelin,m1500sprint);
-			
+		Boolean complete = Utils.notEmpty(sprint,longJump,shotPut,highJump,fourHundreds,hurdles,discus,poleVault,javelin,m1500sprint);			
 		return complete;
 	}
-	
 
 	
 
@@ -144,7 +205,7 @@ public class PerformanceImpl implements Performance {
 	 * @see net.boffardi.decathlon.api.db.internal.Performance#getLongJump()
 	 */
 	@Override
-	public Meters getLongJump() {
+	public Centimeters getLongJump() {
 		return longJump;
 	}
 
@@ -152,7 +213,7 @@ public class PerformanceImpl implements Performance {
 	 * @see net.boffardi.decathlon.api.db.internal.Performance#setLongJump(net.boffardi.decathlon.api.units.Meters)
 	 */
 	@Override
-	public void setLongJump(Meters longJump) {
+	public void setLongJump(Centimeters longJump) {
 		this.longJump = longJump;
 	}
 
@@ -176,7 +237,7 @@ public class PerformanceImpl implements Performance {
 	 * @see net.boffardi.decathlon.api.db.internal.Performance#getHighJump()
 	 */
 	@Override
-	public Meters getHighJump() {
+	public Centimeters getHighJump() {
 		return highJump;
 	}
 
@@ -184,7 +245,7 @@ public class PerformanceImpl implements Performance {
 	 * @see net.boffardi.decathlon.api.db.internal.Performance#setHighJump(net.boffardi.decathlon.api.units.Meters)
 	 */
 	@Override
-	public void setHighJump(Meters highJump) {
+	public void setHighJump(Centimeters highJump) {
 		this.highJump = highJump;
 	}
 
@@ -240,16 +301,16 @@ public class PerformanceImpl implements Performance {
 	 * @see net.boffardi.decathlon.api.db.internal.Performance#getPoleVault()
 	 */
 	@Override
-	public Meters getPoleVault() {
-		return discus;
+	public Centimeters getPoleVault() {
+		return poleVault;
 	}
 
 	/* (non-Javadoc)
 	 * @see net.boffardi.decathlon.api.db.internal.Performance#setPoleVault(net.boffardi.decathlon.api.units.Meters)
 	 */
 	@Override
-	public void setPoleVault(Meters discus) {
-		this.discus = discus;
+	public void setPoleVault(Centimeters poleVault) {
+		this.poleVault = poleVault;
 	}
 
 	/* (non-Javadoc)

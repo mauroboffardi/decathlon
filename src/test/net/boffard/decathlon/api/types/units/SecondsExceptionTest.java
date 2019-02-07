@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.boffardi.decathlon.test.api.types.units;
+package test.net.boffard.decathlon.api.types.units;
 
 import java.text.ParseException;
 

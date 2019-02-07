@@ -29,10 +29,10 @@ To re-initialize the data, just stop Tomcat, remove the `decathlonDB` directory,
 - Added servlet and basic CRUD methods, made a first version of scoreboard list.
 - Refined semifinal version of the list page, with styling and Awesome font for icons
 - Implemented the "delete athlete" function.
+- fixed initial redirect to /list
 	
 		
 ### TODO 
-- adapt starting /list url to /
 - Complete insertPerformance and createPerformance Methods in the servlet
 - Peformance edit form
 - Manage performance deletion

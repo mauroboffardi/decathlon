@@ -31,12 +31,12 @@
 		            <tr>
 		                <th>Position</th>
 		                <th>Name</th>
-		                <th><% if (women) {%>100m<% } else { %>110m<% } %></th>
+		                <th><% if (women) {%>100m<% } else { %>110m<% } %> Sprint</th>
 		                <th>Long Jump</th>
 		                <th>Shot Put</th>
 		                <th>High Jump</th>
 		                <th>400m Sprint</th>
-		                <th>100m Hurdles</th>
+		                <th><% if (women) {%>100m<% } else { %>110m<% } %> Hurdles</th>
 		                <th>Discus Throw</th>
 		                <th>Pole Vault</th>
 		                <th>Javelin Throw</th>

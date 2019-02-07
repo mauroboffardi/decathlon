@@ -31,11 +31,11 @@ To re-initialize the data, just stop Tomcat, remove the `decathlonDB` directory,
 - Implemented the "delete athlete" function.
 - fixed initial redirect to /list
 - Created edit/update form and adjusted controller methods
+- Added form Styling
 	
 		
 ### TODO 
 - field validation
-- form styling
 
 ### Improvements
 Those improvements are not necessary for the correct behavior of the MVP, but should probably be done for a final release.
@@ -50,6 +50,7 @@ Those improvements are not necessary for the correct behavior of the MVP, but sh
 - [] Check string length in DB layer
 - [] Rationalize events in their own table? In general is better practice, in this case seems overengeneering because, well, decathlon will always remain with 10 events :)
 - [] Better handling of log files
+- [] Server side value validation
 
 
 ### Should probably have done better

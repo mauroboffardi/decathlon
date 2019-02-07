@@ -7,149 +7,126 @@
 
     <a class="navigation" href="list"><i class="inprogress fas fa-backspace"></i> Back to scoreboard</a>
              
-    <div align="center">
+    <div>
         <c:if test="${perf != null}">
-            <form action="update" method="post">
+            <form action="update" method="post" class="form-style-4">
+            <input type="hidden" name="id" value="<c:out value='${perf.id}' />" />
         </c:if>
         <c:if test="${perf == null}">
-            <form action="insert" method="post">
+            <form action="insert" method="post" class="form-style-4">
         </c:if>
-        <table border="1" cellpadding="5">
-            <caption>
-                <h2>
-                    <c:if test="${perf != null}">
-                        Edit athlete performance
-                    </c:if>
-                    <c:if test="${perf == null}">
-                        Add new participant
-                    </c:if>
-                </h2>
-            </caption>
-                <c:if test="${perf != null}">
-                    <input type="hidden" name="id" value="<c:out value='${perf.id}' />" />
-                </c:if>           
-            <tr>
-                <th>First name: </th>
-                <td>
-                    <input type="text" name="firstName" 
-                            value="<c:out value='${perf.firstName}' />"
-                        />
-                </td>
-            </tr>
-            <tr>
-                <th>Last name: </th>
-                <td>
-                    <input type="text" name="lastName" 
-                            value="<c:out value='${perf.lastName}' />"
+		<h2>
+			<c:if test="${perf != null}">
+	                        Edit athlete performance
+	                    </c:if>
+			<c:if test="${perf == null}">
+	                        Add new participant
+	                    </c:if>
+		</h2>
+
+        <label for="firstName">
+				<span>First Name</span>
+                <input type="text" name="firstName" 
+                        value="<c:out value='${perf.firstName}' />"
                     />
-                </td>
-            </tr>
-            <tr>
-                <th>Discipline: </th>
-                <td>
-	                <c:set var="discipline" value="${perf.discipline}" scope="page" />
-	                <%  Discipline discipline = (Discipline) pageContext.getAttribute("discipline"); %>
-	                
+        </label>
+                    
+        <label for="lastName">
+				<span>Last Name</span>
+                <input type="text" name="lastName" 
+                        value="<c:out value='${perf.lastName}' />"
+                />
+        </label>
+                
+        <c:set var="discipline" value="${perf.discipline}" scope="page" />
+        <%  Discipline discipline = (Discipline) pageContext.getAttribute("discipline"); %>
+	    <label for="discipline">
+				<span>Discipline</span>
                 	<select name="discipline">
                 		<option value="M" <% if (discipline == Discipline.MEN) { %>selected<%} %> >MEN</option>
                 		<option value="W" <% if (discipline == Discipline.WOMEN) { %>selected<%} %> >WOMEN</option>
                 	</select>
-                </td>
-            </tr>
-            
+        </label>
             	
-            <tr>
-                <th>110/100m :</th>
-                <td>
+	    <label for="sprint">
+				<span>110/100m sprint</span>
                     <input type="text" name="sprint"  class="seconds"
                             value="<c:out value='${perf.sprint}' />"
                     />
-                </td>
-            </tr>
-            <tr>
-                <th>Long Jump :</th>
-                <td>
+        </label>
+        
+        <label for="longJump">
+                <span>Long Jump </span>
                     <input type="text" name="longJump"  class="centimeters"
                             value="<c:out value='${perf.longJump}' />"
                     />
-                </td>
-            </tr>
-            <tr>
-                <th>Shot Put :</th>
-                <td>
+        </label>
+        
+        <label for="shotPut">
+                <span>Shot Put </span>
                     <input type="text" name="shotPut"  class="meters"
                             value="<c:out value='${perf.shotPut}' />"
                     />
-                </td>
-            </tr>
-            <tr>
-                <th>High Jump :</th>
-                <td>
+            </label>
+            
+        <label for="highJump">
+                <span>High Jump </span>
                     <input type="text" name="highJump"  class="centimeters"
                             value="<c:out value='${perf.highJump}' />"
                     />
-                </td>
-            </tr>
+            </label>
 	
-            <tr>
-                <th>400m :</th>
-                <td>
+        <label for="fourHundreds">
+                <span>400m sprint</span>
                     <input type="text" name="fourHundreds"  class="seconds"
                             value="<c:out value='${perf.fourHundreds}' />"
                     />
-                </td>
-            </tr>
+            </label>
             
-            <tr>
-                <th>Hurdles :</th>
-                <td>
+        <label for="hurdles">
+                <span>110/100m Hurdles </span>
+
                     <input type="text" name="hurdles"  class="seconds"
                             value="<c:out value='${perf.hurdles}' />"
                     />
-                </td>
-            </tr>
+
+        </label>
             
-            <tr>
-                <th>Discus throw :</th>
-                <td>
+        <label for="discus">
+                <span>Discus throw </span>
+
                     <input type="text" name="discus"  class="meters"
                             value="<c:out value='${perf.discus}' />"
                     />
-                </td>
-            </tr>
+
+            </label>
             
-            <tr>
-                <th>Pole Vault :</th>
-                <td>
+        <label for="poleVault">
+                <span>Pole Vault </span>
                     <input type="text" name="poleVault"  class="meters"
                             value="<c:out value='${perf.poleVault}' />"
                     />
-                </td>
-            </tr>
+            </label>
             
-            <tr>
-                <th>Javelin :</th>
-                <td>
+        <label for="javelin">
+                <span>Javelin </span>
                     <input type="text" name="javelin"  class="meters"
                             value="<c:out value='${perf.javelin}' />"
                     />
-                </td>
-            </tr>
-            <tr>
-                <th>1500m :</th>
-                <td>
+        </label>
+        
+        <label for="m1500sprint">
+                <span>1500m sprint</span>
                     <input type="text" name="m1500sprint"  class="seconds"
                             value="<c:out value='${perf.m1500sprint}' />"
                     />
-                </td>
-            </tr>
+        </label>
             
-            <tr>
-                <td colspan="2" align="center">
-                    <input type="submit" value="Save" />
-                </td>
-            </tr>
-        </table>
+        <label>
+        	<span></span>
+            <input type="submit" value="Save" />
+        </label>
+
         </form>
     </div>   
 

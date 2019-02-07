@@ -13,7 +13,7 @@ import javax.servlet.ServletContextListener;
 
 import net.boffardi.decathlon.api.Performance;
 import net.boffardi.decathlon.api.db.DBMgr;
-import net.boffardi.decathlon.api.db.PerformanceMgr;
+import net.boffardi.decathlon.api.db.PerformanceDAO;
 import net.boffardi.decathlon.api.types.Discipline;
 import net.boffardi.decathlon.api.types.units.Centimeters;
 import net.boffardi.decathlon.api.types.units.Meters;
@@ -116,7 +116,7 @@ public class DerbyDBInitializingListener implements ServletContextListener {
         // create the schema tables and seed data
     	log.info("Initializing decathlonDB...");
     	
-    	PerformanceMgr.createTables();
+    	PerformanceDAO.createTables();
     	
     	// Comment here to start the application with an empty table.
     	initializeDemoData(con);
@@ -131,7 +131,7 @@ public class DerbyDBInitializingListener implements ServletContextListener {
     private void initializeDemoData(Connection con) throws SQLException {
    
     	try {
-    	Performance alice = PerformanceMgr.createPerformance("Alice", "Allison", Discipline.WOMEN);
+    	Performance alice = PerformanceDAO.createPerformance("Alice", "Allison", Discipline.WOMEN);
     	// reference values for 700pts
     	alice.setSprint(new Seconds("11.756"));
     	alice.setLongJump(new Centimeters(651));
@@ -143,10 +143,10 @@ public class DerbyDBInitializingListener implements ServletContextListener {
     	alice.setPoleVault(new Centimeters(429));
     	alice.setJavelin(new Meters(57.45));
     	alice.setM1500sprint(new Seconds("4:36.96"));
-    	PerformanceMgr.updatePerformance(alice);
+    	PerformanceDAO.updatePerformance(alice);
     	
     	
-    	Performance bob = PerformanceMgr.createPerformance("Bob", "Burgersson", Discipline.MEN);
+    	Performance bob = PerformanceDAO.createPerformance("Bob", "Burgersson", Discipline.MEN);
     	// reference values for 900pts
     	bob.setSprint(new Seconds("10.827"));
     	bob.setLongJump(new Centimeters(736));
@@ -158,10 +158,10 @@ public class DerbyDBInitializingListener implements ServletContextListener {
     	bob.setPoleVault(new Centimeters(496));
     	bob.setJavelin(new Meters(70.67));
     	bob.setM1500sprint(new Seconds("4:07.42"));
-    	PerformanceMgr.updatePerformance(bob);
+    	PerformanceDAO.updatePerformance(bob);
 
 
-    	Performance carl = PerformanceMgr.createPerformance("Carl", "Cristersson", Discipline.MEN);
+    	Performance carl = PerformanceDAO.createPerformance("Carl", "Cristersson", Discipline.MEN);
     	// reference values for 1000pts
     	carl.setSprint(new Seconds("10.395"));
     	carl.setLongJump(new Centimeters(776));
@@ -173,10 +173,10 @@ public class DerbyDBInitializingListener implements ServletContextListener {
     	carl.setPoleVault(new Centimeters(528));
     	carl.setJavelin(new Meters(77.19));
     	carl.setM1500sprint(new Seconds("3:53.79"));
-    	PerformanceMgr.updatePerformance(carl);
+    	PerformanceDAO.updatePerformance(carl);
 
     	
-    	Performance daniel = PerformanceMgr.createPerformance("Daniel", "Danielsson", Discipline.MEN);
+    	Performance daniel = PerformanceDAO.createPerformance("Daniel", "Danielsson", Discipline.MEN);
     	// reference values for 800pts
     	daniel.setSprint(new Seconds("11.278"));
     	daniel.setLongJump(new Centimeters(694));
@@ -188,24 +188,24 @@ public class DerbyDBInitializingListener implements ServletContextListener {
     	daniel.setPoleVault(new Centimeters(463));
     	daniel.setJavelin(new Meters(64.09));
     	daniel.setM1500sprint(new Seconds("4:21.77"));
-    	PerformanceMgr.updatePerformance(daniel);
+    	PerformanceDAO.updatePerformance(daniel);
 
     	// UNCOMPLETED PERFORMANCES
-    	Performance rookie = PerformanceMgr.createPerformance("Rookie", "Rookiesson", Discipline.MEN);
+    	Performance rookie = PerformanceDAO.createPerformance("Rookie", "Rookiesson", Discipline.MEN);
     	rookie.setSprint(new Seconds("12.121"));
     	rookie.setLongJump(new Centimeters(678));
     	rookie.setShotPut(new Meters(14.90));
     	rookie.setHighJump(new Centimeters(187));
     	rookie.setFourHundreds(new Seconds("1:00.128"));
-    	PerformanceMgr.updatePerformance(rookie);
+    	PerformanceDAO.updatePerformance(rookie);
 
     	// UNCOMPLETED PERFORMANCES
-    	Performance lagom = PerformanceMgr.createPerformance("lagom", "lagomsson", Discipline.MEN);
+    	Performance lagom = PerformanceDAO.createPerformance("lagom", "lagomsson", Discipline.MEN);
     	lagom.setSprint(new Seconds("11.281"));
     	lagom.setLongJump(new Centimeters(698));
     	lagom.setShotPut(new Meters(18.90));
     	lagom.setHighJump(new Centimeters(230));
-    	PerformanceMgr.updatePerformance(lagom);
+    	PerformanceDAO.updatePerformance(lagom);
 
     	
     	} catch (ParseException pe) {

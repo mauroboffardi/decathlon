@@ -57,8 +57,17 @@ public class PerformanceImpl implements Performance {
         this.lastName = lastName;
         setDiscipline(discipline);
 	}
-
 	
+	/**
+	 * Constructor for loading an existing performance from the DB.
+	 * ID is passed, and Discipline is parsed from String.
+	 */
+	public PerformanceImpl (String uuid, String firstName, String lastName, String disciplineString) {
+        this.id = uuid;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        setDiscipline(Utils.getDiscipline(disciplineString));
+	}
 	
 	
 	/**
@@ -125,7 +134,7 @@ public class PerformanceImpl implements Performance {
 	/**
 	 * returns "true" if a value has been provided for all 10 events.
 	 */
-	public Boolean isComplete() {
+	public Boolean getComplete() {
 		Boolean complete = Utils.notEmpty(sprint,longJump,shotPut,highJump,fourHundreds,hurdles,discus,poleVault,javelin,m1500sprint);			
 		return complete;
 	}

@@ -1,5 +1,6 @@
 package net.boffardi.decathlon.api;
 
+import net.boffardi.decathlon.api.types.Discipline;
 import net.boffardi.decathlon.api.types.units.EventResult;
 
 /**
@@ -35,6 +36,19 @@ public class Utils {
 	        }
 	    }
 	    return true;
+	}
+	
+	/**
+	 * Unique place to convert a string discipline into an enum
+	 * @param input
+	 * @return
+	 */
+	public static Discipline getDiscipline(String input){
+        if (input.equalsIgnoreCase("W")) {
+            return Discipline.WOMEN;        	
+        } else {
+        	return Discipline.MEN;   
+        }
 	}
 
 }

@@ -26,21 +26,22 @@ To re-initialize the data, just stop Tomcat, remove the `decathlonDB` directory,
 - Added configuration of database location 
 - Added UPDATE method for Performance record, went to an extensive redesign of "Seconds" type to provide correct parsing, and relates test cases. Initialized demo data
 - implemented score calculation, adding more tests. Some trouble with inconsistency of result between different online calculators (i.e http://www.oocities.org/mdetting/sports/decathlon.html) and wikipedia, probably due to rounding. Also, uncertainty between INT() e ROUND(). ROUND returns points closer to the reference values reported in Wikipedia for 7000,8000,9000,10000 pts. The most affected are events measured in centimeters (integer) and with lower values (High Jump), where probably fraction of a centimeter generate more errors. Unfortunately test cases for exact match to 7,8,9,10.000 points still fail, but i'll move forward.
+- Added servlet and basic CRUD methods, made a first version of scoreboard list.
 	
 		
 ### TODO 
-- to test cases and review Second.toString()
+- adapt starting /list url to /
+- Complete insertPerformance and createPerformance Methods in teh servlet
+- Peformance edit form
 - Manage performance deletion
-- Create default view
-- Create/edit a new performance
-- Show performance list sorted by score
-- Manage in progress / finished statues
+- to test cases and review Second.toString()
 
 
 
 ### Improvements
 Those improvements are not necessary for the correct behavior of the MVP, but should probably be done for a final release.
 
+- [] Graceful error page
 - [] Implement complete set of JUnit tests
 - [X] Probably define an interface common to Meters Centimeters and Seconds
 - [] make constructor of PerformanceImpl protected, and use Reflections in test to access it

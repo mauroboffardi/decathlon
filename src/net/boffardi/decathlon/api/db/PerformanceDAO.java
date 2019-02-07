@@ -2,14 +2,20 @@ package net.boffardi.decathlon.api.db;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.boffardi.decathlon.api.Performance;
 import net.boffardi.decathlon.api.types.Discipline;
+import net.boffardi.decathlon.api.types.units.Centimeters;
+import net.boffardi.decathlon.api.types.units.Meters;
+import net.boffardi.decathlon.api.types.units.Seconds;
 
 /**
  * Create, instantiates and deletes objects of type "Performance" from the DB layer.
@@ -18,9 +24,9 @@ import net.boffardi.decathlon.api.types.Discipline;
  * @author mauro.boffardi
  *
  */
-public class PerformanceMgr {
+public class PerformanceDAO {
 	// definition of the logger
-	private static final Logger log = Logger.getLogger(PerformanceMgr.class.getName());
+	private static final Logger log = Logger.getLogger(PerformanceDAO.class.getName());
 
 	/**
 	 * Creates necessary tables and indexes for tables of Performance
@@ -52,8 +58,6 @@ public class PerformanceMgr {
 				" PRIMARY KEY (ID))";
 
 		stmt.executeUpdate(createPerformance);
-		/* create additional index to get perfomances sorted by score */
-		stmt.executeUpdate("CREATE INDEX PERFORMANCE_SCORE_INDEX ON PERFORMANCE(COMPLETED, SCORE)");
 	}
 
 	/**
@@ -96,10 +100,12 @@ public class PerformanceMgr {
 			iStmt.setNull(14, Types.DECIMAL);
 
 			iStmt.setInt(15, perf.getScore());
-			iStmt.setBoolean(16, perf.isComplete());
+			iStmt.setBoolean(16, perf.getComplete());
 
 
 			iStmt.execute();
+			iStmt.close();
+			conn.close();
 
 
 		} catch (SQLException e) {
@@ -212,7 +218,7 @@ public class PerformanceMgr {
 			}
 			
 			uStmt.setInt(14, perf.getScore());
-			uStmt.setBoolean(15, perf.isComplete());
+			uStmt.setBoolean(15, perf.getComplete());
 			
 			// id
 			uStmt.setString(16, perf.getId());
@@ -220,6 +226,8 @@ public class PerformanceMgr {
 			log.info("Updating event results for Athlete ID " + perf.getId() + " " + perf.getFirstName() + " " + perf.getLastName());
 			
 			uStmt.executeUpdate();
+			uStmt.close();
+			conn.close();
 
 		} catch (SQLException e) {
 			log.severe("Could not update a Performance record in the DB!" +  e.getMessage());
@@ -227,4 +235,96 @@ public class PerformanceMgr {
 		}
 
 	}
+	
+	/**
+	 * Deletes a given Performance record from the database
+	 * @param perf
+	 */
+	public static void deletePerformance(String id) {
+		try {
+			Connection conn = DBMgr.getConnection();    	
+
+			String deleteSQL = "DELETE FROM performance SET " + 
+					" WHERE ID = ?";
+			
+			PreparedStatement uStmt = conn.prepareStatement(deleteSQL);
+
+			uStmt.setString(1, id);
+		} catch (SQLException sqle) {
+			// probably a better handling is needed, but the most probable reason is that the record has already deleted (no foreign keys)
+			log.severe("Could not delete a Performance record in the DB! Id=" + id + ", Message: " +  sqle.getMessage());
+		}
+	}
+	
+	/**
+	 * Gets the scoreboard sorted by Discipline (men and woman are on different competitions),
+	 * completed (the one that run all races show firs) and score descending.
+	 * @return
+	 * @throws SQLException
+	 */
+    public static List<Performance> listAllPerformances() throws SQLException {
+        List<Performance> scoreboard = new ArrayList<>();
+         
+        String sql = "SELECT * FROM PERFORMANCE ORDER BY DISCIPLINE, COMPLETED DESC, SCORE DESC, LASTNAME ASC, FIRSTNAME ASC";
+         
+        Connection conn = DBMgr.getConnection();         
+        Statement sStmt = conn.createStatement();
+        ResultSet resultSet = sStmt.executeQuery(sql);
+         
+        while (resultSet.next()) {
+            Performance perf = populatePerformance(resultSet);
+            scoreboard.add(perf);
+        }
+         
+        resultSet.close();
+        sStmt.close();
+        conn.close();
+
+        return scoreboard;
+    }
+    
+    public static Performance getPerformance(String id) throws SQLException {
+        Performance perf = null;
+        String sql = "SELECT * FROM performance WHERE ID = ?";
+         
+        Connection conn = DBMgr.getConnection();         
+        PreparedStatement sStmt = conn.prepareStatement(sql);
+        sStmt.setString(1, id);
+         
+        ResultSet resultSet = sStmt.executeQuery();
+         
+        if (resultSet.next()) {
+            perf = populatePerformance(resultSet);
+            // Since ID is unique, it should return one record only.
+            // worst case (?) will keep the last read.
+        }
+         
+        resultSet.close();
+        sStmt.close();
+         
+        return perf;
+    }
+    
+    /**
+     * Maps all properties of the recordset to a Preference Object
+     * @param record
+     * @return
+     * @throws SQLException 
+     */
+    private static Performance populatePerformance(ResultSet r) throws SQLException { 	
+    	
+    	Performance perf =  (Performance) new PerformanceImpl(r.getString("id"), 
+    				r.getString("firstname"),r.getString("lastname"),r.getString("discipline"));
+    	perf.setSprint(new Seconds(r.getDouble("sprint")));
+    	perf.setLongJump(new Centimeters(r.getDouble("long_jump")));
+    	perf.setShotPut(new Meters(r.getDouble("shot_put")));
+    	perf.setHighJump(new Centimeters(r.getDouble("high_jump")));
+    	perf.setFourHundreds(new Seconds(r.getDouble("four_hundreds")));
+    	perf.setDiscus(new Meters(r.getDouble("discus")));
+    	perf.setPoleVault(new Centimeters(r.getDouble("pole_vault")));
+    	perf.setJavelin(new Meters(r.getDouble("javelin")));
+    	perf.setM1500sprint(new Seconds(r.getDouble("m1500sprint")));
+
+    	return perf;
+    }
 }

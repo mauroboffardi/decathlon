@@ -7,7 +7,7 @@ import net.boffardi.decathlon.api.types.units.Meters;
 import net.boffardi.decathlon.api.types.units.Seconds;
 /**
  * Public interface for the Performance object.
- * "performances" are meant to be created and administered by the PerformanceMgr class
+ * "performances" are meant to be created and administered by the PerformanceDAO class
  * @author mauro.boffardi
  * @see PerformanceImpl
  */
@@ -67,7 +67,7 @@ public interface Performance {
 
 	void setM1500sprint(Seconds m1500sprint);
 
-	Boolean isComplete();
+	Boolean getComplete();
 
 	String getId();
 

@@ -22,6 +22,10 @@ public class Centimeters implements EventResult {
 		this.centimeters = centimeters;
 	}
 	
+	public Centimeters(Double centimeters) {
+		this.centimeters = centimeters.intValue();
+	}
+	
 	public boolean isTimeBased() {
 		return false;
 	}

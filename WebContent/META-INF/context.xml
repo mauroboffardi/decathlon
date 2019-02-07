@@ -6,4 +6,6 @@
         validationQuery="values(1)"
         driverClassName="org.apache.derby.jdbc.EmbeddedDriver"
         url="jdbc:derby:decathlonDB;create=true" />
+        
+        <Valve className="org.apache.catalina.authenticator.BasicAuthenticator"  disableProxyCaching="false" />
 </Context>

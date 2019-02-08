@@ -103,7 +103,7 @@
             
         <label for="poleVault">
                 <span>Pole Vault </span>
-                    <input type="text" name="poleVault"  class="meters"
+                    <input type="text" name="poleVault"  class="centimeters"
                             value="<c:out value='${perf.poleVault}' />"
                     /> m
             </label>

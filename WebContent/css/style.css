@@ -132,7 +132,7 @@ body {
 .form-style-4 input[type=submit],
 .form-style-4 input[type=button],
 .form-style-4 input[type=text],
-.form-style-4 input[type=email],
+.form-style-4 input[type=number],
 .form-style-4 textarea,
 .form-style-4 select,
 .form-style-4 label
@@ -151,7 +151,7 @@ body {
 	width: 200px;
 }
 .form-style-4 input[type=text],
-.form-style-4 input[type=email],
+.form-style-4 input[type=number],
 .form-style-4 select
 {
 	background: transparent;
@@ -177,7 +177,7 @@ body {
 
 .form-style-4 textarea:focus, 
 .form-style-4 input[type=text]:focus,
-.form-style-4 input[type=email]:focus,
+.form-style-4 input[type=number]:focus,
 .form-style-4 input[type=email] :focus
 {
 	border-bottom: 1px dashed #D9FFA9;

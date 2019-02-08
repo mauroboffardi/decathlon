@@ -52,35 +52,35 @@
 				<span>110/100m sprint</span>
                     <input type="text" name="sprint"  class="seconds"
                             value="<c:out value='${perf.sprint}' />"
-                    />
+                    /> s
         </label>
         
         <label for="longJump">
                 <span>Long Jump </span>
                     <input type="text" name="longJump"  class="centimeters"
                             value="<c:out value='${perf.longJump}' />"
-                    />
+                    /> cm
         </label>
         
         <label for="shotPut">
                 <span>Shot Put </span>
                     <input type="text" name="shotPut"  class="meters"
                             value="<c:out value='${perf.shotPut}' />"
-                    />
+                    /> m
             </label>
             
         <label for="highJump">
                 <span>High Jump </span>
                     <input type="text" name="highJump"  class="centimeters"
                             value="<c:out value='${perf.highJump}' />"
-                    />
+                    /> cm
             </label>
 	
         <label for="fourHundreds">
                 <span>400m sprint</span>
-                    <input type="text" name="fourHundreds"  class="seconds"
+                    <input type="text" name="fourHundreds" class="seconds" 
                             value="<c:out value='${perf.fourHundreds}' />"
-                    />
+                    /> s
             </label>
             
         <label for="hurdles">
@@ -88,7 +88,7 @@
 
                     <input type="text" name="hurdles"  class="seconds"
                             value="<c:out value='${perf.hurdles}' />"
-                    />
+                    /> s
 
         </label>
             
@@ -97,7 +97,7 @@
 
                     <input type="text" name="discus"  class="meters"
                             value="<c:out value='${perf.discus}' />"
-                    />
+                    /> m
 
             </label>
             
@@ -105,21 +105,21 @@
                 <span>Pole Vault </span>
                     <input type="text" name="poleVault"  class="meters"
                             value="<c:out value='${perf.poleVault}' />"
-                    />
+                    /> m
             </label>
             
         <label for="javelin">
                 <span>Javelin </span>
                     <input type="text" name="javelin"  class="meters"
                             value="<c:out value='${perf.javelin}' />"
-                    />
+                    /> m
         </label>
         
         <label for="m1500sprint">
                 <span>1500m sprint</span>
                     <input type="text" name="m1500sprint"  class="seconds"
                             value="<c:out value='${perf.m1500sprint}' />"
-                    />
+                    /> s
         </label>
             
         <label>

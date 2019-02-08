@@ -33,24 +33,20 @@ To re-initialize the data, just stop Tomcat, remove the `decathlonDB` directory,
 - Created edit/update form and adjusted controller methods
 - Added form Styling
 	
-		
-### TODO 
-- field validation
-
 ### Improvements
 Those improvements are not necessary for the correct behavior of the MVP, but should probably be done for a final release.
 
+- [] Better Form validation for meters, centimeters, and seconds, with error handling on frontend and backend
 - [] Graceful error page
 - [] Implement complete set of JUnit tests
 - [X] Probably define an interface common to Meters Centimeters and Seconds
 - [] make constructor of PerformanceImpl protected, and use Reflections in test to access it
 - [] fine-tune calculation of points for improved precision. 
-- [] Distinguish between Male/female Calendars for events
+- [] Distinguish between Male/female Calendars for events (day1 / day2)
 - [X] Distinguish between 110m/100m
 - [] Check string length in DB layer
 - [] Rationalize events in their own table? In general is better practice, in this case seems overengeneering because, well, decathlon will always remain with 10 events :)
 - [] Better handling of log files
-- [] Server side value validation
 
 
 ### Should probably have done better
@@ -58,4 +54,5 @@ Those improvements are not necessary for the correct behavior of the MVP, but sh
 - Use a build tool like Gradle to build the project and include the dependencies
 - Use a client side compilation tool like less on node.js to allow better and easier frontend coding
 - Better file structure for jsp resources, and better header/footer framework with cleaner includes
+- Use better standard frontend libraries for style and validation, i.e jQuery, but also Angular/React. I used "home made" to show the background reasoning and not just copy/paste stuff that automagically works :) . 
 
